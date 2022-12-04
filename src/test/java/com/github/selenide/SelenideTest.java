@@ -10,7 +10,7 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class SelenideTest {
 
-    @DisplayName("Поиск страницы с заголовком SoftAssertions на странице Wikis проекта Selenide в Github")
+    @DisplayName("Страница с заголовком SoftAssertions есть на странице Wikis проекта Selenide в Github")
     @Test
     void checkExistSoftAssertionsInWiki() {
 
