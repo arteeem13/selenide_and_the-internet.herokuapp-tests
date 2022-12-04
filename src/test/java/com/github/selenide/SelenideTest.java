@@ -8,7 +8,7 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
 
-public class SelenideTests {
+public class SelenideTest {
 
     @DisplayName("Поиск страницы с заголовком SoftAssertions на странице Wikis проекта Selenide в Github")
     @Test
