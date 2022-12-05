@@ -1,14 +1,33 @@
 package com.github.selenide;
 
+import com.codeborne.selenide.Configuration;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.CollectionCondition.itemWithText;
 import static com.codeborne.selenide.Condition.*;
+import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
+import static com.github.selenide.WikiPageSearch.*;
 
+@DisplayName("Проверки для проекта Selenide на странице Wikis в Github")
 public class SelenideTest {
+
+    @BeforeEach
+    void beforeEach(){
+        Configuration.browser = "CHROME";
+        Configuration.browserSize = "1920x1080";
+        baseUrl = "https://the-internet.herokuapp.com/drag_and_drop";
+    }
+
+    @AfterEach
+    void afterEach(){
+        setCurrentTitleIndex(0);
+        closeWebDriver();
+    }
 
     @DisplayName("Страница с заголовком SoftAssertions есть на странице Wikis проекта Selenide в Github")
     @Test
@@ -17,7 +36,8 @@ public class SelenideTest {
         open("https://github.com/");
         $(".js-site-search-form").click();
         $(".header-search-input").setValue("selenide").pressEnter();
-        $(byText("Wikis")).click();
+        $(".menu").$(byText("Wikis")).click();
+        sleep(2000);
 
         String titleSearch = "SoftAssertions";
 
@@ -25,31 +45,37 @@ public class SelenideTest {
         // решил просто проверить заголовок всей страницы
 
         $("body").shouldHave(text("wiki results"));
-
-        // в цикле идет поиск страницы со страницей, у которой заголовок titleSearch
-        // Цикл останавливается, если заголовок найден, или страница последняя
-
-        int currentTitleIndex = 0;
-        String currentTitleName;
-
-        do {
-
-            // если кнопка Next недоступна, останавливаем выполнение цикла
-            if ($(".next_page.disabled").exists())
-                break;
-
-            // переходим на следующую страницу, если нужного заголовка нет на текущей
-             if (currentTitleIndex == $("#wiki_search_results").findAll(".text-normal").size()) {
-                 $(".next_page").click();
-                 sleep(10000); // гитхаб ругается, при быстром переходе по страницам
-                 currentTitleIndex = 0;
-             }
-
-             currentTitleName = $("#wiki_search_results").$(".text-normal", currentTitleIndex).getText();
-             currentTitleIndex++;
-
-        } while (!(currentTitleName.equals(titleSearch)));
-
+        searchWikiPageByProjectName(titleSearch);
         $("#wiki_search_results").findAll(".text-normal").should(itemWithText(titleSearch));
+    }
+
+    @DisplayName("Есть пример кода для JUnit5 в проекте SoftAssertions")
+    @Test
+    void checkJUnit5CodeInSoftAssertions() {
+
+        open("https://github.com/");
+        $(".js-site-search-form").click();
+        $(".header-search-input").setValue("selenide").pressEnter();
+        $(".menu").$(byText("Wikis")).click();
+        sleep(2000);
+
+        String titleSearch = "SoftAssertions";
+
+        $("body").shouldHave(text("wiki results"));
+        searchWikiPageByProjectName(titleSearch);
+        $("#wiki_search_results").$(byTitle(titleSearch)).click();
+
+        $(".markdown-body").shouldHave(text("Using JUnit5 extend test class:"));
+        $(".markdown-body").shouldHave(text("@ExtendWith({SoftAssertsExtension.class})\n" +
+                "class Tests {\n" +
+                "  @Test\n" +
+                "  void test() {\n" +
+                "    Configuration.assertionMode = SOFT;\n" +
+                "    open(\"page.html\");\n" +
+                "\n" +
+                "    $(\"#first\").should(visible).click();\n" +
+                "    $(\"#second\").should(visible).click();\n" +
+                "  }\n" +
+                "}"));
     }
 }
