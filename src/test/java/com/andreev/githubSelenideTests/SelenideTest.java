@@ -1,4 +1,4 @@
-package com.github.selenide;
+package com.andreev.githubSelenideTests;
 
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.AfterEach;
@@ -11,7 +11,7 @@ import static com.codeborne.selenide.Condition.*;
 import static com.codeborne.selenide.Configuration.baseUrl;
 import static com.codeborne.selenide.Selectors.*;
 import static com.codeborne.selenide.Selenide.*;
-import static com.github.selenide.WikiPageSearch.*;
+import static com.andreev.githubSelenideTests.WikiPageSearch.*;
 
 @DisplayName("Проверки для проекта Selenide на странице Wikis в Github")
 public class SelenideTest {

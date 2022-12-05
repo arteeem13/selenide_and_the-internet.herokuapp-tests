@@ -1,4 +1,4 @@
-package com.theInternetHerokuapp;
+package com.andreev.theInternetHerokuappTests;
 
 import com.codeborne.selenide.Configuration;
 import org.junit.jupiter.api.AfterEach;
