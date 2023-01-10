@@ -1,5 +1,17 @@
 plugins {
     id 'java'
+    id "io.qameta.allure" version "2.8.1"
+}
+
+allure {
+    autoconfigure = true
+    aspectjweaver = true
+    version = "2.15.0"
+    aspectjVersion = "1.9.6"
+    configuration = "testImplementation"
+    useJUnit5 {
+        version = "2.15.0"
+    }
 }
 
 group 'org.example'
@@ -21,7 +33,8 @@ test {
 
 dependencies {
     testImplementation ('com.codeborne:selenide:6.10.1',
-            'org.junit.jupiter:junit-jupiter:5.9.0')
+            'org.junit.jupiter:junit-jupiter:5.9.0',
+            'io.qameta.allure:allure-selenide:2.15.0')
     testRuntimeOnly ('org.junit.jupiter:junit-jupiter-engine:5.9.0')
 }
 
