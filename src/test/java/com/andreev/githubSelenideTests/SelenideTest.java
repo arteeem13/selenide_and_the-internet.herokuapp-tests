@@ -1,6 +1,8 @@
 package com.andreev.githubSelenideTests;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -32,7 +34,7 @@ public class SelenideTest {
     @DisplayName("Страница с заголовком SoftAssertions есть на странице Wikis проекта Selenide в Github")
     @Test
     void checkExistSoftAssertionsInWiki() {
-
+        SelenideLogger.addListener("allure", new AllureSelenide());
         open("https://github.com/");
         $(".js-site-search-form").click();
         $(".header-search-input").setValue("selenide").pressEnter();
@@ -52,7 +54,7 @@ public class SelenideTest {
     @DisplayName("Есть пример кода для JUnit5 в проекте SoftAssertions")
     @Test
     void checkJUnit5CodeInSoftAssertions() {
-
+        SelenideLogger.addListener("allure", new AllureSelenide());
         open("https://github.com/");
         $(".js-site-search-form").click();
         $(".header-search-input").setValue("selenide").pressEnter();

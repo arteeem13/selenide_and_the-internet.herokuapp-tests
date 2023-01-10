@@ -1,6 +1,8 @@
 package com.andreev.theInternetHerokuappTests;
 
 import com.codeborne.selenide.Configuration;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -30,7 +32,7 @@ public class DragAndDropTests {
     @DisplayName("Прямоугольники меняются местами при использовании Selenide.actions()")
     @Test
     void changeRectanglesWithActionsTest() {
-
+        SelenideLogger.addListener("allure", new AllureSelenide());
         open(baseUrl);
 
         // проверяем начальное положение прямоугольников A и В
@@ -53,7 +55,7 @@ public class DragAndDropTests {
     @DisplayName("Прямоугольники меняются местами при использовании Selenide.dragAndDropTo()")
     @Test
     void changeRectanglesWithDragAndDropTest() {
-
+        SelenideLogger.addListener("allure", new AllureSelenide());
         open(baseUrl);
 
         // проверяем начальное положение прямоугольников A и В
